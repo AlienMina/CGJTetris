@@ -41,19 +41,27 @@ public class createCube : MonoBehaviour {
                 //没有的情况下，生成一个指定属性的方块，刷新数组中对应位置的状态
                 //这里是生成沙子方块，在y上循环，如果有某个位置的已经有了方块，在上方一格确认为有方块，否则为最底层有方块
                 GameObject.Instantiate(Instcube[cubeType], pos, new Quaternion(0,0,0,0));
+                Debug.Log("pos.y:" +(int) pos.y);
                 bool find = false;
-                for(int i = 0; i < pos.y; i++)
+                if ((int)pos.y > 0)//不是在最底层
                 {
-                    if(spaceCube.field[(int)pos.x, (int)pos.z, (int)i].isCube)
+                    for (int i =0; i <= (int)pos.y; i++)
                     {
-                        find = true;
-                        spaceCube.field[(int)pos.x, (int)pos.z, (int)i+1].isCube = true;
-                        spaceCube.field[(int)pos.x, (int)pos.z, (int)i+1].cubeHp = (int)destroyTime * 50;
-                        i =(int) pos.y - 1;
-                    }
+                        if (spaceCube.field[(int)pos.x, (int)pos.z, i].isCube && !find)
+                        {
+                            find = true;
+                            spaceCube.field[(int)pos.x, (int)pos.z, (int)i + 1].isCube = true;
+                            Debug.Log(pos.x + "" + pos.y + "" + i + 1);
+                            spaceCube.field[(int)pos.x, (int)pos.z, (int)i + 1].cubeHp = (int)destroyTime * 50;
+                        }
+                    }          
+                    
                 }
-                //spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = true;
-                //spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp = (int)destroyTime*50;
+                else//最底层
+                {
+                    spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = true;
+                    spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp = (int)destroyTime * 50;
+                }
             }
 
         }
