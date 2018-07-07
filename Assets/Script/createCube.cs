@@ -16,7 +16,7 @@ public class createCube : MonoBehaviour {
     public float destroyTime = 3f;//拆方块需要的时间
     bool startDestroy=false;
 
-    public GameObject Instcube0;
+    public GameObject[] Instcube;
     // Use this for initialization
     void Start () {
 		
@@ -26,19 +26,34 @@ public class createCube : MonoBehaviour {
 	void Update () {
 		
 	}
+
+
     private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Q))//如果按下了生成按键
         {
             checkPlace();
+
             //检测该位置是否有方块
             Debug.Log(spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y]);
             if (!spaceCube.field[(int)pos.x,(int)pos.z,(int)pos.y].isCube&&pos.x<7&&pos.z<7)
             {
                 //没有的情况下，生成一个指定属性的方块，刷新数组中对应位置的状态
-                GameObject.Instantiate(Instcube0, pos, new Quaternion(0,0,0,0));
-                spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = true;
-                spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp = (int)destroyTime*50;
+                //这里是生成沙子方块，在y上循环，如果有某个位置的已经有了方块，在上方一格确认为有方块，否则为最底层有方块
+                GameObject.Instantiate(Instcube[cubeType], pos, new Quaternion(0,0,0,0));
+                bool find = false;
+                for(int i = 0; i < pos.y; i++)
+                {
+                    if(spaceCube.field[(int)pos.x, (int)pos.z, (int)i].isCube)
+                    {
+                        find = true;
+                        spaceCube.field[(int)pos.x, (int)pos.z, (int)i+1].isCube = true;
+                        spaceCube.field[(int)pos.x, (int)pos.z, (int)i+1].cubeHp = (int)destroyTime * 50;
+                        i =(int) pos.y - 1;
+                    }
+                }
+                //spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = true;
+                //spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp = (int)destroyTime*50;
             }
 
         }
