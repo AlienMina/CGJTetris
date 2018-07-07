@@ -35,16 +35,16 @@ public class createCube : MonoBehaviour {
         {
             checkPlace();
             //检测该位置是否有方块
-            //Debug.Log(spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y]);
+            Debug.Log("PlayerY: " + (int)pos.y);
             if (!spaceCube.field[(int)pos.x,(int)pos.z,(int)pos.y].isCube&&pos.x<7&&pos.z<7)//如果生成位置没有方块，并且在场景范围内
             {
-                pos.y += 0.1f;//用于校正高度的微调变量
-                //校正xyz
-                pos.x = (int)pos.x;
-                pos.y = (int)pos.y;
-                pos.z = (int)pos.z;
+
+                bool find = false;
+                //pos.y += 0.1f;//用于校正高度的微调变量
                 //在选定的位置生成指定类型【这里是沙子】的方块
                 GameObject.Instantiate(Instcube[cubeType], pos, new Quaternion(0,0,0,0));
+                #region oldCode
+                /*
                 bool find = false;
                 Debug.Log("pos.y:" + (int)pos.y + " float:" + pos.y);
                 Debug.Log("playerPositionCubeState: " + spaceCube.field[(int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.z, (int)this.gameObject.transform.position.y].isCube);
@@ -99,9 +99,28 @@ public class createCube : MonoBehaviour {
                     Debug.Log("ground?");
                     spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube = true;
                     spaceCube.field[(int)pos.x, (int)pos.z, 0].cubeHp = (int)destroyTime * 50;
+
                     Debug.Log((int)pos.y);
                     Debug.Log("already ground. "+spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube);
                     Debug.Log(spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube);
+                }*/
+                #endregion
+                for(int i = (int)pos.y; i >= 0; i--)
+                {
+                    Debug.Log("pos.y: " + pos.y);
+                    if (spaceCube.field[(int)pos.x, (int)pos.z, i].isCube && !find)
+                    {
+                        spaceCube.field[(int)pos.x, (int)pos.z, (i + 1)].isCube = true;
+                        find = true;
+                        Debug.Log("findPlace: " + pos.x + " " +( i + 1) + " " + pos.z);
+                        Debug.Log("i: " + i);
+                    }
+                }
+                if (!find)
+                {
+                    find = true;
+                    spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube = true;
+                    Debug.Log("findPlaceUnder: " + pos.x + " " +0 + " " + pos.z);
                 }
             }
 

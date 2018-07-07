@@ -26,7 +26,6 @@ public class playerMove : MonoBehaviour {
         bool cubed;
         if (spaceCube.playerMoveable)
         {
-            //spaceCube.field[(int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.z, (int)this.gameObject.transform.position.y].isCube = false;//自己站的一格会谜之true……
             if (Input.GetKeyDown(KeyCode.W))
             {
 
@@ -36,6 +35,7 @@ public class playerMove : MonoBehaviour {
                     pos = this.gameObject.transform.position;
                     x = pos.x - 1;
                     pos.x = x;
+                    //pos.y += 0.01f;//校正用
                     cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
                     if (cubed)
                     {
@@ -56,7 +56,10 @@ public class playerMove : MonoBehaviour {
                     pos = this.gameObject.transform.position;
                     x = pos.x + 1;
                     pos.x = x;
+                    //pos.y += 0.01f;//校正用
                     cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
+                    Debug.Log("cubed: " + cubed);
+                    Debug.Log("position: " + (int)pos.x + " " + (int)pos.z + " " + (int)pos.y + " ");
                     if (cubed)
                     {
                         y = pos.y + 1;
@@ -77,6 +80,7 @@ public class playerMove : MonoBehaviour {
                     pos = this.gameObject.transform.position;
                     z = pos.z - 1;
                     pos.z = z;
+                    //pos.y += 0.01f;//校正用
                     cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
                     if (cubed)
                     {
@@ -98,6 +102,7 @@ public class playerMove : MonoBehaviour {
                     pos = this.gameObject.transform.position;
                     z = pos.z + 1;
                     pos.z = z;
+                   // pos.y += 0.01f;//校正用
                     cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
 
                     if (cubed)
