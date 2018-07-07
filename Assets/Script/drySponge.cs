@@ -10,6 +10,7 @@ public class drySponge : MonoBehaviour {
     public GameObject wetSponge;
     public GameObject water;
 
+    public float destroyTime = 3f;
     Vector3 pos;
     bool finishAbsorb = false;
 	// Use this for initialization
@@ -54,6 +55,7 @@ public class drySponge : MonoBehaviour {
             if (!spaceCube.field[(int)pos.x - 1, (int)pos.z, (int)pos.y].isCube)
             {
                 spaceCube.field[(int)pos.x - 1, (int)pos.z, (int)pos.y].isCube = true;
+                spaceCube.field[(int)pos.x - 1, (int)pos.z, (int)pos.y].cubeHp=(int)destroyTime * 50;
                 position = new Vector3((int)pos.x - 1, (int)pos.y, (int)pos.z);
                 GameObject.Instantiate(wetSponge, position, new Quaternion(0, 0, 0, 0));
             }
@@ -63,6 +65,7 @@ public class drySponge : MonoBehaviour {
             if (!spaceCube.field[(int)pos.x + 1, (int)pos.z, (int)pos.y].isCube)
             {
                 spaceCube.field[(int)pos.x + 1, (int)pos.z, (int)pos.y].isCube = true;
+                spaceCube.field[(int)pos.x + 1, (int)pos.z, (int)pos.y].cubeHp = (int)destroyTime * 50;
                 position = new Vector3((int)pos.x + 1, (int)pos.y, (int)pos.z);
                 GameObject.Instantiate(wetSponge, position, new Quaternion(0, 0, 0, 0));
             }
@@ -72,6 +75,7 @@ public class drySponge : MonoBehaviour {
             if (!spaceCube.field[(int)pos.x, (int)pos.z - 1, (int)pos.y].isCube)
             {
                 spaceCube.field[(int)pos.x, (int)pos.z - 1, (int)pos.y].isCube = true;
+                spaceCube.field[(int)pos.x, (int)pos.z - 1, (int)pos.y].cubeHp = (int)destroyTime * 50;
                 position = new Vector3((int)pos.x, (int)pos.y, (int)pos.z - 1);
                 GameObject.Instantiate(wetSponge, position, new Quaternion(0, 0, 0, 0));
             }
@@ -81,6 +85,7 @@ public class drySponge : MonoBehaviour {
             if (!spaceCube.field[(int)pos.x, (int)pos.z + 1, (int)pos.y].isCube)
             {
                 spaceCube.field[(int)pos.x, (int)pos.z + 1, (int)pos.y].isCube = true;
+                spaceCube.field[(int)pos.x, (int)pos.z + 1, (int)pos.y].cubeHp = (int)destroyTime * 50;
                 position = new Vector3((int)pos.x, (int)pos.y, (int)pos.z + 1);
                 GameObject.Instantiate(wetSponge, position, new Quaternion(0, 0, 0, 0));
             }
@@ -90,7 +95,8 @@ public class drySponge : MonoBehaviour {
             if(!spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y - 1].isCube)
             {
                 spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y - 1].isCube = true;
-                position=new Vector3((int)pos.x, (int)pos.y-1, (int)pos.z);
+                spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y - 1].cubeHp = (int)destroyTime * 50;
+                position =new Vector3((int)pos.x, (int)pos.y-1, (int)pos.z);
                 GameObject.Instantiate(wetSponge, position, new Quaternion(0, 0, 0, 0));
             }
         }
@@ -99,6 +105,7 @@ public class drySponge : MonoBehaviour {
             if (!spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y + 1].isCube)
             {
                 spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y + 1].isCube = true;
+                spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y + 1].cubeHp = (int)destroyTime * 50;
                 position = new Vector3((int)pos.x, (int)pos.y + 1, (int)pos.z);
                 GameObject.Instantiate(wetSponge, position, new Quaternion(0, 0, 0, 0));
             }

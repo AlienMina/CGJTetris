@@ -41,7 +41,10 @@ public class createCube : MonoBehaviour {
                 int Type = Random.Range(0, 100);
                 Type = Type < 49 ? 0 : 1;
                 bool find = false;
-                //pos.y += 0.1f;//用于校正高度的微调变量
+                //校正position
+                pos.x = (int)pos.x;
+                pos.y = (int)pos.y;
+                pos.z = (int)pos.z;
                 //在选定的位置生成指定类型【这里是沙子】的方块
                 GameObject.Instantiate(Instcube[Type], pos, new Quaternion(0,0,0,0));
                 #region oldCode
@@ -114,6 +117,7 @@ public class createCube : MonoBehaviour {
                         if (spaceCube.field[(int)pos.x, (int)pos.z, i].isCube && !find)
                         {
                             spaceCube.field[(int)pos.x, (int)pos.z, (i + 1)].isCube = true;
+                            spaceCube.field[(int)pos.x, (int)pos.z, (i + 1)].cubeHp=(int)destroyTime * 50;
                             find = true;
                             //Debug.Log("findPlace: " + pos.x + " " +( i + 1) + " " + pos.z);
                             //Debug.Log("i: " + i);
@@ -123,12 +127,14 @@ public class createCube : MonoBehaviour {
                     {
                         find = true;
                         spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube = true;
+                        spaceCube.field[(int)pos.x, (int)pos.z, 0].cubeHp = (int)destroyTime * 50;
                         //Debug.Log("findPlaceUnder: " + pos.x + " " +0 + " " + pos.z);
                     }
                 }
                 else if (Type == 0)//海绵
                 {
                     spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = true;
+                    spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp = (int)destroyTime * 50;
                 }
             }
 
@@ -142,6 +148,7 @@ public class createCube : MonoBehaviour {
             if (spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube)
             {
                 startDestroy = true;
+                Debug.Log("startDestory");
                 spaceCube.playerMoveable = false;
             }
         }
@@ -154,6 +161,7 @@ public class createCube : MonoBehaviour {
         if (startDestroy)
         {
             spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp--;
+            Debug.Log(spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp--);
             if(spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp == 0)
             {
                 spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = false;
