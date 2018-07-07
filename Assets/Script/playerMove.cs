@@ -24,88 +24,91 @@ public class playerMove : MonoBehaviour {
     private void FixedUpdate()
     {
         bool cubed;
-        if (Input.GetKeyDown(KeyCode.W))
+        if (spaceCube.playerMoveable)
         {
-            
-            if (checkFace() == 4)
-            {
-                
-                pos = this.gameObject.transform.position;
-                x = pos.x - 1;
-                pos.x = x;
-                cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
-                if (cubed)
-                {
-                    y = pos.y + 1;
-                    pos.y = y;
-                }
-                this.gameObject.transform.position = pos;
-            }
-            else
-            {
-                turnFace("up");
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (checkFace() == 1)
-            {
-                pos = this.gameObject.transform.position;
-                x = pos.x + 1;
-                pos.x = x;
-                cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
-                if (cubed)
-                {
-                    y = pos.y + 1;
-                    pos.y = y;
-                }
-                this.gameObject.transform.position = pos;
-            }
-            else
-            {
-                turnFace("down");
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (checkFace() == 2)
+            if (Input.GetKeyDown(KeyCode.W))
             {
 
-                pos = this.gameObject.transform.position;
-                z = pos.z - 1;
-                pos.z = z;
-                cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
-                if (cubed)
+                if (checkFace() == 4)
                 {
-                    y = pos.y + 1;
-                    pos.y = y;
-                }
-                this.gameObject.transform.position = pos;
-            }
-            else
-            {
-                turnFace("left");
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (checkFace() == 3)
-            {
 
-                pos = this.gameObject.transform.position;
-                z = pos.z + 1;
-                pos.z = z;
-                cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
-                if (cubed)
-                {
-                    y = pos.y + 1;
-                    pos.y = y;
+                    pos = this.gameObject.transform.position;
+                    x = pos.x - 1;
+                    pos.x = x;
+                    cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
+                    if (cubed)
+                    {
+                        y = pos.y + 1;
+                        pos.y = y;
+                    }
+                    this.gameObject.transform.position = pos;
                 }
-                this.gameObject.transform.position = pos;
+                else
+                {
+                    turnFace("up");
+                }
             }
-            else
+            else if (Input.GetKeyDown(KeyCode.S))
             {
-                turnFace("right");
+                if (checkFace() == 1)
+                {
+                    pos = this.gameObject.transform.position;
+                    x = pos.x + 1;
+                    pos.x = x;
+                    cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
+                    if (cubed)
+                    {
+                        y = pos.y + 1;
+                        pos.y = y;
+                    }
+                    this.gameObject.transform.position = pos;
+                }
+                else
+                {
+                    turnFace("down");
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                if (checkFace() == 2)
+                {
+
+                    pos = this.gameObject.transform.position;
+                    z = pos.z - 1;
+                    pos.z = z;
+                    cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
+                    if (cubed)
+                    {
+                        y = pos.y + 1;
+                        pos.y = y;
+                    }
+                    this.gameObject.transform.position = pos;
+                }
+                else
+                {
+                    turnFace("left");
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                if (checkFace() == 3)
+                {
+
+                    pos = this.gameObject.transform.position;
+                    z = pos.z + 1;
+                    pos.z = z;
+                    cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
+                    if (cubed)
+                    {
+                        y = pos.y + 1;
+                        pos.y = y;
+                    }
+                    this.gameObject.transform.position = pos;
+                }
+                else
+                {
+                    turnFace("right");
+                }
             }
         }
     }

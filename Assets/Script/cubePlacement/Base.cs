@@ -16,7 +16,7 @@ public class Base : MonoBehaviour
 
     public spaceCube[,,] field=new spaceCube[fieldX,fieldZ,fieldY];
 
-    
+    public bool playerMoveable = true;//这个是在拆方块的时候禁止角色移动的
 
 	// Use this for initialization
 	void Start ()
