@@ -5,34 +5,73 @@ using UnityEngine;
 public class tetrisMove : MonoBehaviour
 {
 
-    public Vector3Int[,,,] state = new Vector3Int[4,4,4,4];//第一维度用于存储形状，第二维度、第三维度用于存储旋转状态，第四维度用于记录各个方块的位置
+    public Vector3Int[,,,] state =
+    {
+        {
+            {{new Vector3Int(0,0,0),new Vector3Int(-1,0,0),new Vector3Int(0,0,-1),new Vector3Int(1,0,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,-1,0),new Vector3Int(0,0,-1),new Vector3Int(0,1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(0,0,-1),new Vector3Int (-1,-1,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,1,0),new Vector3Int(0,0,-1),new Vector3Int(0,-1,-1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(-1,0,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,-1,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,0),new Vector3Int(1,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,0),new Vector3Int(0,1,-1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(-1,0,0),new Vector3Int(0,0,-1),new Vector3Int(1,0,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,-1,0),new Vector3Int(0,0,-1),new Vector3Int(0,1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(0,0,-1),new Vector3Int(-1,-1,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,1,0),new Vector3Int(0,0,-1),new Vector3Int(0,-1,-1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(-1,0,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,-1,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,0),new Vector3Int(1,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,0),new Vector3Int(0,1,-1)} }
+        },
+
+        {
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,0,-1),new Vector3Int(1,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,0,-1),new Vector3Int(0,1,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,0,-1),new Vector3Int(-1,0,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,0,-1),new Vector3Int(0,-1,-1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(-1,0,0),new Vector3Int(-1,0,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,1,0),new Vector3Int(0,-1,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(-1,0,0),new Vector3Int(1,0,0),new Vector3Int(1,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,-1,0),new Vector3Int(0,1,0),new Vector3Int(0,1,-1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,-1),new Vector3Int(0,0,1),new Vector3Int(-1,0,1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,-1),new Vector3Int(0,0,1),new Vector3Int(0,-1,1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,-1),new Vector3Int(0,0,1),new Vector3Int(1,0,1)}     ,{new Vector3Int(0,0,0),new Vector3Int(0,0,-1),new Vector3Int(0,0,1),new Vector3Int(0,1,1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(-1,0,0),new Vector3Int(1,0,0),new Vector3Int(1,0,1)}     ,{new Vector3Int(0,0,0),new Vector3Int(0,-1,0),new Vector3Int(0,1,0),new Vector3Int(0,1,1)}     ,{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(-1,0,0),new Vector3Int(-1,0,1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,1,0),new Vector3Int(0,-1,0),new Vector3Int(0,-1,1)}
+ }
+        },
+
+        {
+            {{new Vector3Int(0,0,0),new Vector3Int(-1,0,0),new Vector3Int(1,0,0),new Vector3Int(0,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,-1,0),new Vector3Int(0,1,0),new Vector3Int(0,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(-1,0,0),new Vector3Int(0,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,1,0),new Vector3Int(0,-1,0),new Vector3Int(0,0,-1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,0,-1),new Vector3Int(-1,0,0)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,0,-1),new Vector3Int(0,-1,0)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,0,-1),new Vector3Int(1,0,0)}     ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,0,-1),new Vector3Int(0,1,0)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(-1,0,0),new Vector3Int(0,0,1)}     ,{new Vector3Int(0,0,0),new Vector3Int(0,1,0),new Vector3Int(0,-1,0),new Vector3Int(0,0,1)}     ,{new Vector3Int(0,0,0),new Vector3Int(-1,0,0),new Vector3Int(1,0,0),new Vector3Int(0,0,1)}     ,{new Vector3Int(0,0,0),new Vector3Int(0,-1,0),new Vector3Int(0,1,0),new Vector3Int(0,0,1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,-1),new Vector3Int(0,0,1),new Vector3Int(1,0,0)}     ,{new Vector3Int(0,0,0),new Vector3Int(0,0,-1),new Vector3Int(0,0,1),new Vector3Int(0,1,0)}     ,{new Vector3Int(0,0,0),new Vector3Int(0,0,-1),new Vector3Int(0,0,1),new Vector3Int(-1,0,0)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,-1),new Vector3Int(0,0,1),new Vector3Int(0,-1,0)} }
+        },
+
+        {
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,1),new Vector3Int(1,0,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,1),new Vector3Int(0,1,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,1),new Vector3Int(1,0,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,1),new Vector3Int(0,1,0)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,1),new Vector3Int(1,0,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,1),new Vector3Int(0,1,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,1),new Vector3Int(1,0,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,1),new Vector3Int(0,1,0)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,1),new Vector3Int(1,0,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,1),new Vector3Int(0,1,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,1),new Vector3Int(1,0,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,1),new Vector3Int(0,1,0)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,1),new Vector3Int(1,0,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,1),new Vector3Int(0,1,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,1),new Vector3Int(1,0,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,1),new Vector3Int(0,1,0)} }
+        }
+    }
+        ;//第一维度用于存储形状，第二维度、第三维度用于存储旋转状态，第四维度用于记录各个方块的位置
 
     public int stateNum1 = 0;//俄罗斯方块的形状编号
     public int stateNum2 = 0;//俄罗斯方块的旋转编号
     public int stateNum3 = 0;//俄罗斯方块的旋转编号
     public int stateNum4 = 0;//俄罗斯方块的位置编号
     public int topCube = 0;//最高的方块所在层数
-    public int drop,i,j,k;//循环变量
+    public int drop,h,i,j,k,l;//循环变量
     public bool wakeUp = false;//FindTarget()死循环接触装置
     public Vector3Int aimPos;//准星所在位置
     public Vector3Int dropVec;//下落补正
     public Vector3Int[] oriPos = new Vector3Int[4];//俄罗斯方块的空中位置
     public Vector3Int[] tarPos = new Vector3Int[4];//俄罗斯方块的预计落点
     public Vector3Int[] scoPos = new Vector3Int[4];//俄罗斯方块的斥候位置
+    public Vector3[] creatPosition = new Vector3[4];
+    public Vector3[] skyPosition = new Vector3[4];
     public Base touch;
+    public GameObject cube;
+    public GameObject[] oriCube = new GameObject[4];
 
 
     // Use this for initialization
     void Start ()
     {
-        
-
-
+        stateNum1 = Random.Range(0, 4);
+        stateNum2 = Random.Range(0, 4);
+        stateNum3 = Random.Range(0, 4);
+        FindOriginal();
+        FindTarget();
+        ShowCube();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        
 
         //,<键 旋转1
         if (Input.GetKeyDown(KeyCode.Comma))
@@ -65,6 +104,7 @@ public class tetrisMove : MonoBehaviour
                     break;
             }
             FindTarget();
+            ShowCube();
         }
 
         //.>键 旋转2
@@ -98,6 +138,7 @@ public class tetrisMove : MonoBehaviour
                     break;
             }
             FindTarget();
+            ShowCube();
         }
 
         //平移
@@ -111,6 +152,7 @@ public class tetrisMove : MonoBehaviour
                 FindOriginal();
             }
             FindTarget();
+            ShowCube();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -123,6 +165,7 @@ public class tetrisMove : MonoBehaviour
                 FindOriginal();
             }
             FindTarget();
+            ShowCube();
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -135,6 +178,7 @@ public class tetrisMove : MonoBehaviour
                 FindOriginal();
             }
             FindTarget();
+            ShowCube();
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -147,11 +191,13 @@ public class tetrisMove : MonoBehaviour
                 FindOriginal();
             }
             FindTarget();
+            ShowCube();
         }
 
         //下落
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
+            FallDown();
 
         }
 	}
@@ -214,11 +260,37 @@ public class tetrisMove : MonoBehaviour
         return cO;
     }
 
-
-    void TetrisShape()
+    //方块下落
+    void FallDown()
     {
+        for(l=0;l<4;l++)
+        {
+            creatPosition[l].x = tarPos[l].x * 1.0f;
+            creatPosition[l].y = tarPos[l].y * 1.0f;
+            creatPosition[l].z = tarPos[l].z * 1.0f;
+            GameObject.Instantiate(cube, creatPosition[l], new Quaternion(0, 0, 0, 0));//生成方块实体
+            touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].isCube = true;
+            touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].cubeHp = 1;
+            touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].cubeType = 1;//改变存储数据
+        }
+
         stateNum1 = Random.Range(0, 4);
+        stateNum2 = Random.Range(0, 4);
+        stateNum3 = Random.Range(0, 4);
+        FindOriginal();
+        FindTarget();
+        ShowCube();
     }
 
-
+    //方块预览
+    void ShowCube()
+    {       
+        for (h = 0; h < 4; h++)
+        {
+            skyPosition[h].x = oriPos[h].x * 1.0f;
+            skyPosition[h].y = oriPos[h].y * 1.0f;
+            skyPosition[h].z = oriPos[h].z * 1.0f;
+            oriCube[h].transform.position = skyPosition[h];
+        }
+    }
 }
