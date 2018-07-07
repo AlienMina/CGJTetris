@@ -35,7 +35,7 @@ public class createCube : MonoBehaviour {
         {
             checkPlace();
             //检测该位置是否有方块
-            Debug.Log("PlayerY: " + (int)pos.y);
+            //Debug.Log("PlayerY: " + (int)pos.y);
             if (!spaceCube.field[(int)pos.x,(int)pos.z,(int)pos.y].isCube&&pos.x<7&&pos.z<7)//如果生成位置没有方块，并且在场景范围内
             {
 
@@ -107,20 +107,20 @@ public class createCube : MonoBehaviour {
                 #endregion
                 for(int i = (int)pos.y; i >= 0; i--)
                 {
-                    Debug.Log("pos.y: " + pos.y);
+                    //Debug.Log("pos.y: " + pos.y);
                     if (spaceCube.field[(int)pos.x, (int)pos.z, i].isCube && !find)
                     {
                         spaceCube.field[(int)pos.x, (int)pos.z, (i + 1)].isCube = true;
                         find = true;
-                        Debug.Log("findPlace: " + pos.x + " " +( i + 1) + " " + pos.z);
-                        Debug.Log("i: " + i);
+                        //Debug.Log("findPlace: " + pos.x + " " +( i + 1) + " " + pos.z);
+                        //Debug.Log("i: " + i);
                     }
                 }
                 if (!find)
                 {
                     find = true;
                     spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube = true;
-                    Debug.Log("findPlaceUnder: " + pos.x + " " +0 + " " + pos.z);
+                    //Debug.Log("findPlaceUnder: " + pos.x + " " +0 + " " + pos.z);
                 }
             }
 

@@ -12,12 +12,15 @@ public class tetrisMove : MonoBehaviour
     public int stateNum3 = 0;//俄罗斯方块的旋转编号
     public int stateNum4 = 0;//俄罗斯方块的位置编号
     public int topCube = 0;//最高的方块所在层数
-    public int drop,i,j;
+    public int drop,i,j,k;//循环变量
+    public bool wakeUp = false;//FindTarget()死循环接触装置
     public Vector3Int aimPos;//准星所在位置
-    public Vector3Int dropVec;
+    public Vector3Int dropVec;//下落补正
     public Vector3Int[] oriPos = new Vector3Int[4];//俄罗斯方块的空中位置
     public Vector3Int[] tarPos = new Vector3Int[4];//俄罗斯方块的预计落点
     public Vector3Int[] scoPos = new Vector3Int[4];//俄罗斯方块的斥候位置
+    public Base touch;
+
 
     // Use this for initialization
     void Start ()
@@ -30,71 +33,191 @@ public class tetrisMove : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        for(i=0;i<4;i++)
-        {
-            oriPos[i] = state[stateNum1, stateNum2, stateNum3, i] + aimPos;
-        }
 
-        for(drop=0; ;drop++)
+        //,<键 旋转1
+        if (Input.GetKeyDown(KeyCode.Comma))
         {
-            dropVec.x = 0;
-            dropVec.y = 0;
-            dropVec.z = drop;
-            for (j = 0; j < 4; j++)
+            stateNum2 = (stateNum2 + 1) % 4;
+            FindOriginal();
+        switch (CheckOut())//纠错
             {
-                scoPos[j] = oriPos[j] - dropVec;
+                case 0:
+                    break;
+
+                case 1:
+                    aimPos.x++;
+                    FindOriginal();
+                    break;
+
+                case 2:
+                    aimPos.x--;
+                    FindOriginal();
+                    break;
+                
+                case 3:
+                    aimPos.z++;
+                    FindOriginal();
+                    break;
+
+                case 4:
+                    aimPos.z--;
+                    FindOriginal();
+                    break;
             }
+            FindTarget();
         }
 
-        if (Input.GetKeyDown(KeyCode.Comma))//,<键 旋转1
-        {
-            stateNum2 = (stateNum2 + 1) % 4; 
-        }
-        if (Input.GetKeyDown(KeyCode.Period))//.>键 旋转2
+        //.>键 旋转2
+        if (Input.GetKeyDown(KeyCode.Period))
         {
             stateNum3 = (stateNum3 + 1) % 4;
+            FindOriginal();
+            switch (CheckOut())//纠错
+            {
+                case 0:
+                    break;
+
+                case 1:
+                    aimPos.x++;
+                    FindOriginal();
+                    break;
+
+                case 2:
+                    aimPos.x--;
+                    FindOriginal();
+                    break;
+
+                case 3:
+                    aimPos.z++;
+                    FindOriginal();
+                    break;
+
+                case 4:
+                    aimPos.z--;
+                    FindOriginal();
+                    break;
+            }
+            FindTarget();
         }
 
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            aimPos.z++;
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
+        //平移
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             aimPos.x--;
+            FindOriginal();
+            if (CheckOut() != 0)
+            {
+                aimPos.x++;
+                FindOriginal();
+            }
+            FindTarget();
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             aimPos.z--;
+            FindOriginal();
+            if (CheckOut() != 0)
+            {
+                aimPos.z++;
+                FindOriginal();
+            }
+            FindTarget();
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             aimPos.x++;
+            FindOriginal();
+            if (CheckOut() != 0)
+            {
+                aimPos.x--;
+                FindOriginal();
+            }
+            FindTarget();
         }
 
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            aimPos.z++;
+            FindOriginal();
+            if (CheckOut() != 0)
+            {
+                aimPos.z--;
+                FindOriginal();
+            }
+            FindTarget();
+        }
+
+        //下落
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
 
         }
 	}
 
+    //找空中位置
+    void FindOriginal()
+    {
+        for (i = 0; i < 4; i++)
+        {
+            oriPos[i] = state[stateNum1, stateNum2, stateNum3, i] + aimPos;//为每个方块分配位置
+        }
+    }
+
+    //找预计落点
+    void FindTarget()
+    {
+        for (drop = 1; ; drop++)
+        {
+            dropVec.x = 0;
+            dropVec.y = 0;
+            dropVec.z = drop;//下落量
+            for (j = 0; j < 4; j++)
+            {
+                scoPos[j] = oriPos[j] - dropVec;//得出斥候位置
+                if (touch.field[scoPos[j].x, scoPos[j].y, scoPos[j].z].isCube == true)//判定是否接触
+                {
+                    dropVec.z--;
+                    wakeUp = true;
+                    break;
+                }
+            }
+            if (wakeUp == true)
+            {
+                for (j = 0; j < 4; j++)
+                {
+                    tarPos[j] = oriPos[j] - dropVec;//得出预计落点
+                }
+                break;
+            }
+        }
+        wakeUp = false;
+    }
+
+    //纠错
+    int CheckOut()
+    {
+        int cO;
+        cO = 0;
+        for (k=0;k<4;k++)
+        {
+            if (oriPos[k].x < 0)//↑出界
+                cO = 1;
+            if (oriPos[k].x > 6)//↓出界
+                cO = 2;
+            if (oriPos[k].y < 0)//←出界
+                cO = 3;
+            if (oriPos[k].y > 6)//→出界
+                cO = 4;
+        }
+        return cO;
+    }
+
+
     void TetrisShape()
     {
         stateNum1 = Random.Range(0, 4);
-        switch(stateNum1)
-        {
-            case 0 :
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-        }
     }
 
 
