@@ -37,8 +37,9 @@ public class createCube : MonoBehaviour {
             //检测该位置是否有方块
             //Debug.Log("PlayerY: " + (int)pos.y);
             if (!spaceCube.field[(int)pos.x,(int)pos.z,(int)pos.y].isCube&&pos.x<7&&pos.z<7)//如果生成位置没有方块，并且在场景范围内
-            {
-                int Type = (int)Random.value * (cubeType+1);
+            {                
+                int Type = Random.Range(0, 100);
+                Type = Type < 49 ? 0 : 1;
                 bool find = false;
                 //pos.y += 0.1f;//用于校正高度的微调变量
                 //在选定的位置生成指定类型【这里是沙子】的方块
