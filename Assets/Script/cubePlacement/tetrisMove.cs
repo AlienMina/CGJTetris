@@ -43,23 +43,26 @@ public class tetrisMove : MonoBehaviour
     public int stateNum3 = 0;//俄罗斯方块的旋转编号
     public int stateNum4 = 0;//俄罗斯方块的位置编号
     public int topCube = 0;//最高的方块所在层数
-    public int drop,h,i,j,k,l;//循环变量
-    public bool wakeUp = false;//FindTarget()死循环接触装置
+    public int h,i,j,k,l,m,n,o;//循环变量
+    public int drop,topUp;//下落量和制高点增长量
+    public bool wakeUp = false , wakeDown = false;//FindTarget()和NewTOP()死循环接触装置
     public Vector3Int aimPos;//准星所在位置
     public Vector3Int dropVec;//下落补正
     public Vector3Int[] oriPos = new Vector3Int[4];//俄罗斯方块的空中位置
     public Vector3Int[] tarPos = new Vector3Int[4];//俄罗斯方块的预计落点
-    public Vector3Int[] scoPos = new Vector3Int[4];//俄罗斯方块的斥候位置
+    public Vector3Int[] scoPos = { new Vector3Int(3,3,3), new Vector3Int(3, 3, 3), new Vector3Int(3, 3, 3), new Vector3Int(3, 3, 3) };//俄罗斯方块的斥候位置
     public Vector3[] creatPosition = new Vector3[4];
     public Vector3[] skyPosition = new Vector3[4];
     public Base touch;
     public GameObject cube;
     public GameObject[] oriCube = new GameObject[4];
+    public GameObject[] opyCube = new GameObject[4];
 
 
     // Use this for initialization
     void Start ()
     {
+        ResetAim();
         stateNum1 = Random.Range(0, 4);
         stateNum2 = Random.Range(0, 4);
         stateNum3 = Random.Range(0, 4);
@@ -157,11 +160,11 @@ public class tetrisMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            aimPos.z--;
+            aimPos.y--;
             FindOriginal();
             if (CheckOut() != 0)
             {
-                aimPos.z++;
+                aimPos.y++;
                 FindOriginal();
             }
             FindTarget();
@@ -183,11 +186,11 @@ public class tetrisMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            aimPos.z++;
+            aimPos.y++;
             FindOriginal();
             if (CheckOut() != 0)
             {
-                aimPos.z--;
+                aimPos.y--;
                 FindOriginal();
             }
             FindTarget();
@@ -195,10 +198,9 @@ public class tetrisMove : MonoBehaviour
         }
 
         //下落
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.RightShift))
         {
             FallDown();
-
         }
 	}
 
@@ -222,6 +224,12 @@ public class tetrisMove : MonoBehaviour
             for (j = 0; j < 4; j++)
             {
                 scoPos[j] = oriPos[j] - dropVec;//得出斥候位置
+                if(scoPos[j].z < 0)
+                {
+                    dropVec.z--;
+                    wakeUp = true;
+                    break;
+                }
                 if (touch.field[scoPos[j].x, scoPos[j].y, scoPos[j].z].isCube == true)//判定是否接触
                 {
                     dropVec.z--;
@@ -266,14 +274,16 @@ public class tetrisMove : MonoBehaviour
         for(l=0;l<4;l++)
         {
             creatPosition[l].x = tarPos[l].x * 1.0f;
-            creatPosition[l].y = tarPos[l].y * 1.0f;
-            creatPosition[l].z = tarPos[l].z * 1.0f;
+            creatPosition[l].y = tarPos[l].z * 1.0f;
+            creatPosition[l].z = tarPos[l].y * 1.0f;
             GameObject.Instantiate(cube, creatPosition[l], new Quaternion(0, 0, 0, 0));//生成方块实体
             touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].isCube = true;
-            touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].cubeHp = 1;
+            touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].cubeHp = 150;
             touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].cubeType = 1;//改变存储数据
         }
 
+        NewHigh();
+        ResetAim();
         stateNum1 = Random.Range(0, 4);
         stateNum2 = Random.Range(0, 4);
         stateNum3 = Random.Range(0, 4);
@@ -288,9 +298,50 @@ public class tetrisMove : MonoBehaviour
         for (h = 0; h < 4; h++)
         {
             skyPosition[h].x = oriPos[h].x * 1.0f;
-            skyPosition[h].y = oriPos[h].y * 1.0f;
-            skyPosition[h].z = oriPos[h].z * 1.0f;
+            skyPosition[h].y = oriPos[h].z * 1.0f;
+            skyPosition[h].z = oriPos[h].y * 1.0f;
             oriCube[h].transform.position = skyPosition[h];
+            creatPosition[h].x = tarPos[h].x * 1.0f;
+            creatPosition[h].y = tarPos[h].z * 1.0f;
+            creatPosition[h].z = tarPos[h].y * 1.0f;
+            opyCube[h].transform.position = creatPosition[h];
         }
+    }
+
+    //更新制高点
+    void NewHigh()
+    {
+        for (topUp = 1; ; topUp++)
+        {
+            for(m=0;m<7;m++)
+            {
+                for(n=0;n<7;n++)
+                {
+                    if(touch.field[m,n,topCube+topUp].isCube == true)
+                    {
+                        wakeDown = true;
+                        break;
+                    }
+                }
+            }
+
+            if(wakeDown == false)
+            {
+                topCube = topCube + topUp - 1;
+                break;
+            }
+            else
+            {
+                wakeDown = false;
+            }                        
+        }
+    }
+
+    //校准
+    void ResetAim()
+    {
+        aimPos.x = 3;
+        aimPos.y = 3;
+        aimPos.z = topCube + 6;
     }
 }
