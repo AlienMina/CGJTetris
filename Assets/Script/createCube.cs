@@ -8,7 +8,7 @@ public class createCube : MonoBehaviour {
     /// </summary>
     public Base spaceCube;
     public playerMove playermove;//从中获取角色面向
-    public int cubeType=0;//生成的方块的类型，为了测试这里一直是0
+    public int cubeType=2;//生成的方块的类型
 
     Vector3 pos;
     int face;
@@ -38,11 +38,11 @@ public class createCube : MonoBehaviour {
             //Debug.Log("PlayerY: " + (int)pos.y);
             if (!spaceCube.field[(int)pos.x,(int)pos.z,(int)pos.y].isCube&&pos.x<7&&pos.z<7)//如果生成位置没有方块，并且在场景范围内
             {
-
+                int Type = (int)Random.value * (cubeType+1);
                 bool find = false;
                 //pos.y += 0.1f;//用于校正高度的微调变量
                 //在选定的位置生成指定类型【这里是沙子】的方块
-                GameObject.Instantiate(Instcube[cubeType], pos, new Quaternion(0,0,0,0));
+                GameObject.Instantiate(Instcube[Type], pos, new Quaternion(0,0,0,0));
                 #region oldCode
                 /*
                 bool find = false;
@@ -105,22 +105,29 @@ public class createCube : MonoBehaviour {
                     Debug.Log(spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube);
                 }*/
                 #endregion
-                for(int i = (int)pos.y; i >= 0; i--)
+                if (Type == 1)//沙子
                 {
-                    //Debug.Log("pos.y: " + pos.y);
-                    if (spaceCube.field[(int)pos.x, (int)pos.z, i].isCube && !find)
+                    for (int i = (int)pos.y; i >= 0; i--)
                     {
-                        spaceCube.field[(int)pos.x, (int)pos.z, (i + 1)].isCube = true;
+                        //Debug.Log("pos.y: " + pos.y);
+                        if (spaceCube.field[(int)pos.x, (int)pos.z, i].isCube && !find)
+                        {
+                            spaceCube.field[(int)pos.x, (int)pos.z, (i + 1)].isCube = true;
+                            find = true;
+                            //Debug.Log("findPlace: " + pos.x + " " +( i + 1) + " " + pos.z);
+                            //Debug.Log("i: " + i);
+                        }
+                    }
+                    if (!find)
+                    {
                         find = true;
-                        //Debug.Log("findPlace: " + pos.x + " " +( i + 1) + " " + pos.z);
-                        //Debug.Log("i: " + i);
+                        spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube = true;
+                        //Debug.Log("findPlaceUnder: " + pos.x + " " +0 + " " + pos.z);
                     }
                 }
-                if (!find)
+                else if (Type == 0)//海绵
                 {
-                    find = true;
-                    spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube = true;
-                    //Debug.Log("findPlaceUnder: " + pos.x + " " +0 + " " + pos.z);
+                    spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = true;
                 }
             }
 
