@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class playerMove : MonoBehaviour {
 
+    public Base spaceCube;
     Vector3 pos;
     float x;
     float z;
+    float y;
 
 	// Use this for initialization
 	void Start () {
@@ -21,13 +23,22 @@ public class playerMove : MonoBehaviour {
     //需要预留面前方块有东西的情况，如果撞上了应该是爬上去
     private void FixedUpdate()
     {
+        bool cubed;
         if (Input.GetKeyDown(KeyCode.W))
         {
+            
             if (checkFace() == 4)
             {
+                
                 pos = this.gameObject.transform.position;
                 x = pos.x - 1;
                 pos.x = x;
+                cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
+                if (cubed)
+                {
+                    y = pos.y + 1;
+                    pos.y = y;
+                }
                 this.gameObject.transform.position = pos;
             }
             else
@@ -42,6 +53,12 @@ public class playerMove : MonoBehaviour {
                 pos = this.gameObject.transform.position;
                 x = pos.x + 1;
                 pos.x = x;
+                cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
+                if (cubed)
+                {
+                    y = pos.y + 1;
+                    pos.y = y;
+                }
                 this.gameObject.transform.position = pos;
             }
             else
@@ -53,9 +70,16 @@ public class playerMove : MonoBehaviour {
         {
             if (checkFace() == 2)
             {
+
                 pos = this.gameObject.transform.position;
                 z = pos.z - 1;
                 pos.z = z;
+                cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
+                if (cubed)
+                {
+                    y = pos.y + 1;
+                    pos.y = y;
+                }
                 this.gameObject.transform.position = pos;
             }
             else
@@ -67,9 +91,16 @@ public class playerMove : MonoBehaviour {
         {
             if (checkFace() == 3)
             {
+
                 pos = this.gameObject.transform.position;
                 z = pos.z + 1;
                 pos.z = z;
+                cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
+                if (cubed)
+                {
+                    y = pos.y + 1;
+                    pos.y = y;
+                }
                 this.gameObject.transform.position = pos;
             }
             else

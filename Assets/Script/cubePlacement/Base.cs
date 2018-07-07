@@ -12,9 +12,9 @@ public class Base : MonoBehaviour
         public int cubeHp;
     };
 
-    public int fieldX=7, fieldY=1000, fieldZ=7;
+    public static int fieldX=7, fieldY=1000, fieldZ=7;
 
-    spaceCube [][][] field ;
+    public spaceCube[,,] field=new spaceCube[fieldX,fieldZ,fieldY];
 
     
 
@@ -28,10 +28,10 @@ public class Base : MonoBehaviour
             {
                 for (int k = 0; k < fieldY; k++)
                 {
-                    field[i][j][k] = new spaceCube();
-                    field[i][j][k].isCube = false;//无方块
-                    field[i][j][k].cubeType = 0;
-                    field[i][j][k].cubeHp = 0;
+                    field[i,j,k]= new spaceCube();
+                    field[i, j, k].isCube = false;//无方块
+                    field[i, j, k].cubeType = 0;
+                    field[i, j, k].cubeHp = 0;
                 }
             }
         }
