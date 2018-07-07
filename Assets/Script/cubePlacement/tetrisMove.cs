@@ -8,10 +8,10 @@ public class tetrisMove : MonoBehaviour
     public Vector3Int[,,,] state =
     {
         {
-            {{new Vector3Int(0,0,0),new Vector3Int(-1,0,0),new Vector3Int(0,0,-1),new Vector3Int(1,0,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,-1,0),new Vector3Int(0,0,-1),new Vector3Int(0,1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(0,0,-1),new Vector3Int (-1,-1,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,1,0),new Vector3Int(0,0,-1),new Vector3Int(0,-1,-1)} },
-            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(-1,0,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,-1,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,0),new Vector3Int(1,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,0),new Vector3Int(0,1,-1)} },
-            {{new Vector3Int(0,0,0),new Vector3Int(-1,0,0),new Vector3Int(0,0,-1),new Vector3Int(1,0,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,-1,0),new Vector3Int(0,0,-1),new Vector3Int(0,1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(0,0,-1),new Vector3Int(-1,-1,0)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,1,0),new Vector3Int(0,0,-1),new Vector3Int(0,-1,-1)} },
-            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(-1,0,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,-1,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,0),new Vector3Int(1,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,0),new Vector3Int(0,1,-1)} }
+            {{new Vector3Int(0,0,0),new Vector3Int(-1,0,0),new Vector3Int(0,0,-1),new Vector3Int(1,0,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,-1,0),new Vector3Int(0,0,-1),new Vector3Int(0,1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(0,0,-1),new Vector3Int (-1,0,-1)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,1,0),new Vector3Int(0,0,-1),new Vector3Int(0,-1,-1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(-1,0,0),new Vector3Int(-1,0,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,-1,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,0),new Vector3Int(1,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,0),new Vector3Int(0,1,-1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(-1,0,0),new Vector3Int(0,0,-1),new Vector3Int(1,0,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,-1,0),new Vector3Int(0,0,-1),new Vector3Int(0,1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(0,0,-1),new Vector3Int(-1,0,-1)}  ,{new Vector3Int(0,0,0),new Vector3Int(0,1,0),new Vector3Int(0,0,-1),new Vector3Int(0,-1,-1)} },
+            {{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(-1,0,0),new Vector3Int(-1,0,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,-1,0),new Vector3Int(0,-1,-1)}   ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(1,0,0),new Vector3Int(1,0,-1)}    ,{new Vector3Int(0,0,0),new Vector3Int(0,0,1),new Vector3Int(0,1,0),new Vector3Int(0,1,-1)} }
         },
 
         {
@@ -198,7 +198,7 @@ public class tetrisMove : MonoBehaviour
         }
 
         //下落
-        if (Input.GetKeyDown(KeyCode.RightShift))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             FallDown();
         }
