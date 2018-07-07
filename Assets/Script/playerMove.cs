@@ -18,6 +18,7 @@ public class playerMove : MonoBehaviour {
 		
 	}
 
+    //需要预留面前方块有东西的情况，如果撞上了应该是爬上去
     private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.W))
@@ -78,14 +79,14 @@ public class playerMove : MonoBehaviour {
         }
     }
 
-    int checkFace()
+    public int checkFace()
     {
         Vector3 faceVec3 = this.gameObject.transform.localEulerAngles;
         float faceY = faceVec3.y;
-        int face=0;
+        int face=1;
 
         
-        if (faceY==0)
+        if (faceY>=-1&&faceY<90)
         {
             face = 1;
         }
@@ -118,7 +119,7 @@ public class playerMove : MonoBehaviour {
         {
             this.gameObject.transform.localEulerAngles = new Vector3(this.gameObject.transform.localEulerAngles.x, 0, this.gameObject.transform.localEulerAngles.z);
             //this.gameObject.transform.rotation = new Quaternion(this.gameObject.transform.rotation.x, 0, this.gameObject.transform.rotation.z, this.gameObject.transform.rotation.w);
-            Debug.Log("down");
+            Debug.Log("down" + this.gameObject.transform.localEulerAngles);
         }
         else if (facement == "left")
         {
