@@ -39,8 +39,16 @@ public class playerMove : MonoBehaviour {
                     cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
                     if (cubed)
                     {
-                        y = pos.y + 1;
-                        pos.y = y;
+                        if (!spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y + 1].isCube)
+                        {
+                            y = pos.y + 1;
+                            pos.y = y;
+                        }
+                        else
+                        {
+                            y-=1;
+                            pos.x = this.gameObject.transform.position.x;
+                        }
                     }
                     this.gameObject.transform.position = pos;
                 }
@@ -62,8 +70,16 @@ public class playerMove : MonoBehaviour {
                     Debug.Log("position: " + (int)pos.x + " " + (int)pos.z + " " + (int)pos.y + " ");
                     if (cubed)
                     {
-                        y = pos.y + 1;
-                        pos.y = y;
+                        if (!spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y + 1].isCube)
+                        {
+                            y = pos.y + 1;
+                            pos.y = y;
+                        }
+                        else
+                        {
+                            y -= 1;
+                            pos.x = this.gameObject.transform.position.x;
+                        }
                     }
                     this.gameObject.transform.position = pos;
                 }
@@ -84,8 +100,16 @@ public class playerMove : MonoBehaviour {
                     cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
                     if (cubed)
                     {
-                        y = pos.y + 1;
-                        pos.y = y;
+                        if (!spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y + 1].isCube)
+                        {
+                            y = pos.y + 1;
+                            pos.y = y;
+                        }
+                        else
+                        {
+                            y -= 1;
+                            pos.z = this.gameObject.transform.position.z;
+                        }
                     }
                     this.gameObject.transform.position = pos;
                 }
@@ -107,8 +131,16 @@ public class playerMove : MonoBehaviour {
 
                     if (cubed)
                     {
-                        y = pos.y + 1;
-                        pos.y = y;
+                        if (!spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y + 1].isCube)
+                        {
+                            y = pos.y + 1;
+                            pos.y = y;
+                        }
+                        else
+                        {
+                            y -= 1;
+                            pos.z = this.gameObject.transform.position.z;
+                        }
                     }
                     this.gameObject.transform.position = pos;
                 }
