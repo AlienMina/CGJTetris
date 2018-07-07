@@ -745,7 +745,50 @@ MonoBehaviour:
   playermove: {fileID: 776686658}
   cubeType: 0
   destroyTime: 3
-  Instcube0: {fileID: 1464353456}
+  Instcube:
+  - {fileID: 1743513838310454, guid: 91c49bed29ccf0745acfe9643ddb954a, type: 2}
+--- !u!1001 &998723022
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4831061615794758, guid: 91c49bed29ccf0745acfe9643ddb954a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831061615794758, guid: 91c49bed29ccf0745acfe9643ddb954a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831061615794758, guid: 91c49bed29ccf0745acfe9643ddb954a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831061615794758, guid: 91c49bed29ccf0745acfe9643ddb954a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831061615794758, guid: 91c49bed29ccf0745acfe9643ddb954a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831061615794758, guid: 91c49bed29ccf0745acfe9643ddb954a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831061615794758, guid: 91c49bed29ccf0745acfe9643ddb954a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831061615794758, guid: 91c49bed29ccf0745acfe9643ddb954a, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 91c49bed29ccf0745acfe9643ddb954a, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1032779024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,11 +1359,6 @@ MonoBehaviour:
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
   eventHandlerComponentsAdded: 0
---- !u!1 &1464353456 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1743513838310454, guid: 9c0e681bb0371c5499997a4b3a4302da,
-    type: 2}
-  m_PrefabInternal: {fileID: 2044310915}
 --- !u!1 &1849115600
 GameObject:
   m_ObjectHideFlags: 0

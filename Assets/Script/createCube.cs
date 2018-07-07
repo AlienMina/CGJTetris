@@ -30,37 +30,78 @@ public class createCube : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        
         if (Input.GetKeyDown(KeyCode.Q))//如果按下了生成按键
         {
             checkPlace();
-
             //检测该位置是否有方块
-            Debug.Log(spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y]);
-            if (!spaceCube.field[(int)pos.x,(int)pos.z,(int)pos.y].isCube&&pos.x<7&&pos.z<7)
+            //Debug.Log(spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y]);
+            if (!spaceCube.field[(int)pos.x,(int)pos.z,(int)pos.y].isCube&&pos.x<7&&pos.z<7)//如果生成位置没有方块，并且在场景范围内
             {
-                //没有的情况下，生成一个指定属性的方块，刷新数组中对应位置的状态
-                //这里是生成沙子方块，在y上循环，如果有某个位置的已经有了方块，在上方一格确认为有方块，否则为最底层有方块
+                pos.y += 0.1f;//用于校正高度的微调变量
+                //校正xyz
+                pos.x = (int)pos.x;
+                pos.y = (int)pos.y;
+                pos.z = (int)pos.z;
+                //在选定的位置生成指定类型【这里是沙子】的方块
                 GameObject.Instantiate(Instcube[cubeType], pos, new Quaternion(0,0,0,0));
-                Debug.Log("pos.y:" +(int) pos.y);
                 bool find = false;
-                if ((int)pos.y > 0)//不是在最底层
+                Debug.Log("pos.y:" + (int)pos.y + " float:" + pos.y);
+                Debug.Log("playerPositionCubeState: " + spaceCube.field[(int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.z, (int)this.gameObject.transform.position.y].isCube);
+                //寻找沙子方块的落点
+                if ((int)pos.y > 0)//不是在最底层生成，需要从当前层向下查，碰到的第一个方块的上一层就是最后的落点
                 {
-                    for (int i =0; i <= (int)pos.y; i++)
+                    if ((int)pos.y == 1)
                     {
-                        if (spaceCube.field[(int)pos.x, (int)pos.z, i].isCube && !find)
+                        if(spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube)//如果第0层有方块了，那么直接在对应位置生成
                         {
-                            find = true;
-                            spaceCube.field[(int)pos.x, (int)pos.z, (int)i + 1].isCube = true;
-                            Debug.Log(pos.x + "" + pos.y + "" + i + 1);
-                            spaceCube.field[(int)pos.x, (int)pos.z, (int)i + 1].cubeHp = (int)destroyTime * 50;
+                            spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = true;
+                            spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp= (int)destroyTime * 50;
                         }
-                    }          
-                    
+                        else
+                        {
+                            spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube = true;
+                            spaceCube.field[(int)pos.x, (int)pos.z,0].cubeHp = (int)destroyTime * 50;
+                        }
+                    }
+                    else//从2层开始
+                    {
+                        for (int i = (int)pos.y; i > 0; i--)
+                        {
+                            Debug.Log("i: " + i);
+                            if (spaceCube.field[(int)pos.x, (int)pos.z, i].isCube && !find)
+                            {
+                                find = true;
+                                spaceCube.field[(int)pos.x, (int)pos.z, (int)i + 1].isCube = true;
+                                Debug.Log("found! " + pos.x + "" + pos.y + "" + i + 1);
+                                spaceCube.field[(int)pos.x, (int)pos.z, (int)i + 1].cubeHp = (int)destroyTime * 50;
+                                //spaceCube.field[(int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.z, (int)this.gameObject.transform.position.y].isCube = false;//自己站的一格会谜之true……
+
+                            }
+                        }
+                        if (!find)//遍历一圈还没找到，就是底层了
+                        {
+                            Debug.Log("isGround? " + pos.x + "" + pos.y + "");
+                            spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube = true;
+                            spaceCube.field[(int)pos.x, (int)pos.z, 0].cubeHp = (int)destroyTime * 50;
+                            find = true;
+                            Debug.Log("not found in loop. " + (int)pos.x + " " + (int)pos.z);
+                            Debug.Log(spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube);
+                            Debug.Log("playerPositionCubeStateAfterLoop: " + spaceCube.field[(int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.z, (int)this.gameObject.transform.position.y].isCube);
+                            //spaceCube.field[(int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.z, (int)this.gameObject.transform.position.y].isCube = false;//自己站的一格会谜之true……
+
+                        }
+                    }
+
                 }
-                else//最底层
+                else//最底层，那么直接在对应位置生成就行，因为不能再向下掉了
                 {
-                    spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = true;
-                    spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp = (int)destroyTime * 50;
+                    Debug.Log("ground?");
+                    spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube = true;
+                    spaceCube.field[(int)pos.x, (int)pos.z, 0].cubeHp = (int)destroyTime * 50;
+                    Debug.Log((int)pos.y);
+                    Debug.Log("already ground. "+spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube);
+                    Debug.Log(spaceCube.field[(int)pos.x, (int)pos.z, 0].isCube);
                 }
             }
 

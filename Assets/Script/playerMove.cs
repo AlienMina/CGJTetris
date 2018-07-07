@@ -26,6 +26,7 @@ public class playerMove : MonoBehaviour {
         bool cubed;
         if (spaceCube.playerMoveable)
         {
+            //spaceCube.field[(int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.z, (int)this.gameObject.transform.position.y].isCube = false;//自己站的一格会谜之true……
             if (Input.GetKeyDown(KeyCode.W))
             {
 
@@ -98,6 +99,7 @@ public class playerMove : MonoBehaviour {
                     z = pos.z + 1;
                     pos.z = z;
                     cubed = spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube;
+
                     if (cubed)
                     {
                         y = pos.y + 1;
@@ -136,7 +138,7 @@ public class playerMove : MonoBehaviour {
         {
             face = 4;
         }
-        Debug.Log(face);
+        //Debug.Log(face);
         return face;
     }
 
@@ -147,25 +149,25 @@ public class playerMove : MonoBehaviour {
             //this.gameObject.transform.Rotate(this.gameObject.transform.rotation.x, 180, this.gameObject.transform.rotation.z);
             this.gameObject.transform.localEulerAngles = new Vector3(this.gameObject.transform.localEulerAngles.x, 180, this.gameObject.transform.localEulerAngles.z);
             //this.gameObject.transform.rotation = new Quaternion(this.gameObject.transform.rotation.x, 180, this.gameObject.transform.rotation.z, this.gameObject.transform.rotation.w);
-            Debug.Log("up"+this.gameObject.transform.localEulerAngles);
+            //Debug.Log("up"+this.gameObject.transform.localEulerAngles);
         }
         else if (facement == "down")
         {
             this.gameObject.transform.localEulerAngles = new Vector3(this.gameObject.transform.localEulerAngles.x, 0, this.gameObject.transform.localEulerAngles.z);
             //this.gameObject.transform.rotation = new Quaternion(this.gameObject.transform.rotation.x, 0, this.gameObject.transform.rotation.z, this.gameObject.transform.rotation.w);
-            Debug.Log("down" + this.gameObject.transform.localEulerAngles);
+            //Debug.Log("down" + this.gameObject.transform.localEulerAngles);
         }
         else if (facement == "left")
         {
             this.gameObject.transform.localEulerAngles = new Vector3(this.gameObject.transform.localEulerAngles.x, 90, this.gameObject.transform.localEulerAngles.z);
             //this.gameObject.transform.rotation = new Quaternion(this.gameObject.transform.rotation.x, 90, this.gameObject.transform.rotation.z, this.gameObject.transform.rotation.w);
-            Debug.Log("left");
+            //Debug.Log("left");
         }
         else if (facement == "right")
         {
             this.gameObject.transform.localEulerAngles = new Vector3(this.gameObject.transform.localEulerAngles.x, -90, this.gameObject.transform.localEulerAngles.z);
             //this.gameObject.transform.rotation = new Quaternion(this.gameObject.transform.rotation.x, -90, this.gameObject.transform.rotation.z, this.gameObject.transform.rotation.w);
-            Debug.Log("right" + this.gameObject.transform.localEulerAngles);
+            //Debug.Log("right" + this.gameObject.transform.localEulerAngles);
         }
     }
 }
