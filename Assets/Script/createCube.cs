@@ -38,7 +38,7 @@ public class createCube : MonoBehaviour {
                 //没有的情况下，生成一个指定属性的方块，刷新数组中对应位置的状态
                 GameObject.Instantiate(Instcube0, pos, new Quaternion(0,0,0,0));
                 spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = true;
-                spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp = 150;
+                spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp = (int)destroyTime*50;
             }
 
         }
@@ -80,7 +80,7 @@ public class createCube : MonoBehaviour {
         face = playermove.checkFace();
         //获取角色的坐标，并且根据角色坐标计算生成方块的坐标
         pos = this.gameObject.transform.position;
-        pos.y -= 0.5f;
+       // pos.y -= 0.5f;
         float delta;
         if (face == 1)
         {
