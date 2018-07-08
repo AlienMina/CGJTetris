@@ -53,6 +53,7 @@ public class tetrisMove : MonoBehaviour
     public Vector3Int[] scoPos = { new Vector3Int(3,3,3), new Vector3Int(3, 3, 3), new Vector3Int(3, 3, 3), new Vector3Int(3, 3, 3) };//俄罗斯方块的斥候位置
     public Vector3[] creatPosition = new Vector3[4];
     public Vector3[] skyPosition = new Vector3[4];
+    //public GameObject[] cubelist = new GameObject[3];
     public Base touch;
     public GameObject cube;
     public GameObject[] oriCube = new GameObject[4];
@@ -285,10 +286,13 @@ public class tetrisMove : MonoBehaviour
     {
         for(l=0;l<4;l++)
         {
+
+            int ran = Random.Range(0, 3);
             creatPosition[l].x = tarPos[l].x * 1.0f;
             creatPosition[l].y = tarPos[l].z * 1.0f;
             creatPosition[l].z = tarPos[l].y * 1.0f;
             GameObject.Instantiate(cube, creatPosition[l], new Quaternion(0, 0, 0, 0));//生成方块实体
+            //GameObject.Instantiate(cubelist[ran], creatPosition[l], new Quaternion(0, 0, 0, 0));//生成方块实体
             touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].isCube = true;
             touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].cubeHp = 150;
             touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].cubeType = 1;//改变存储数据
