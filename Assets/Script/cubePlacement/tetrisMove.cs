@@ -55,6 +55,7 @@ public class tetrisMove : MonoBehaviour
     public Vector3[] skyPosition = new Vector3[4];
     public Base touch;
     public GameObject cube;
+    public GameObject[] cubelist = new GameObject[3];
     public GameObject[] oriCube = new GameObject[4];
     public GameObject[] opyCube = new GameObject[4];
 
@@ -285,10 +286,11 @@ public class tetrisMove : MonoBehaviour
     {
         for(l=0;l<4;l++)
         {
+            int randomCubeIndex = Random.Range(0, 3);
             creatPosition[l].x = tarPos[l].x * 1.0f;
             creatPosition[l].y = tarPos[l].z * 1.0f;
             creatPosition[l].z = tarPos[l].y * 1.0f;
-            GameObject.Instantiate(cube, creatPosition[l], new Quaternion(0, 0, 0, 0));//生成方块实体
+            GameObject.Instantiate(cubelist[randomCubeIndex], creatPosition[l], new Quaternion(0, 0, 0, 0));//生成方块实体
             touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].isCube = true;
             touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].cubeHp = 150;
             touch.field[tarPos[l].x, tarPos[l].y, tarPos[l].z].cubeType = 1;//改变存储数据
