@@ -18,6 +18,7 @@ public class createCube : MonoBehaviour {
     public AudioSource placeCube;
     public AudioSource breakCube;
     public AudioSource deleteCube;
+    public AudioSource bornSand;
 
     public GameObject[] Instcube;
     // Use this for initialization
@@ -115,6 +116,7 @@ public class createCube : MonoBehaviour {
                 #endregion
                 if (Type == 1)//沙子
                 {
+                    bornSand.Play();
                     for (int i = (int)pos.y; i >= 0; i--)
                     {
                         //Debug.Log("pos.y: " + pos.y);
