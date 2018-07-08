@@ -9,13 +9,14 @@ public class drySponge : MonoBehaviour {
     public Base spaceCube;
     public GameObject wetSponge;
     public GameObject water;
+    AudioSource abso;
 
     public float destroyTime = 3f;
     Vector3 pos;
     bool finishAbsorb = false;
 	// Use this for initialization
 	void Start () {
-		
+        abso = this.gameObject.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -37,6 +38,7 @@ public class drySponge : MonoBehaviour {
     {
         if(water.transform.position.y-this.gameObject.transform.position.y>=-0.5 && !finishAbsorb)
         {
+            abso.Play();
             absorb();
             finishAbsorb = true;
             Debug.Log("BOOM");
