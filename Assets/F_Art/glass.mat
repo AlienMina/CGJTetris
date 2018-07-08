@@ -83,9 +83,9 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _node_1244: 2
+    - _node_1244: 0.07
     - _node_4276: 0.34
-    - _node_7961: -0.01
+    - _node_7961: -0.13
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.8469206, g: 0.97971606, b: 0.9811321, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
