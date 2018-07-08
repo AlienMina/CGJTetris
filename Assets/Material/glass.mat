@@ -85,7 +85,7 @@ Material:
     - _ZWrite: 1
     - _node_1244: -0.92
     - _node_4276: 0.34
-    - _node_7961: -0.01
+    - _node_7961: -0.47
     m_Colors:
     - _Color: {r: 0.33708617, g: 0.74882317, b: 0.9528302, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
