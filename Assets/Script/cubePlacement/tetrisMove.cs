@@ -58,6 +58,11 @@ public class tetrisMove : MonoBehaviour
     public GameObject[] oriCube = new GameObject[4];
     public GameObject[] opyCube = new GameObject[4];
 
+    //Audio
+    public AudioSource tetrisCubeMove;
+    public AudioSource tetrisYrotate;
+    public AudioSource tetrisXZrotate;
+    public AudioSource tetrisDrop;
 
     // Use this for initialization
     void Start ()
@@ -79,6 +84,7 @@ public class tetrisMove : MonoBehaviour
         //,<键 旋转1
         if (Input.GetKeyDown(KeyCode.Comma))
         {
+            tetrisXZrotate.Play();
             stateNum2 = (stateNum2 + 1) % 4;
             FindOriginal();
         switch (CheckOut())//纠错
@@ -113,6 +119,7 @@ public class tetrisMove : MonoBehaviour
         //.>键 旋转2
         if (Input.GetKeyDown(KeyCode.Period))
         {
+            tetrisYrotate.Play();
             stateNum3 = (stateNum3 + 1) % 4;
             FindOriginal();
             switch (CheckOut())//纠错
@@ -147,6 +154,7 @@ public class tetrisMove : MonoBehaviour
         //平移
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            tetrisCubeMove.Play();
             aimPos.x--;
             FindOriginal();
             if (CheckOut() != 0)
@@ -160,6 +168,7 @@ public class tetrisMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            tetrisCubeMove.Play();
             aimPos.y--;
             FindOriginal();
             if (CheckOut() != 0)
@@ -173,6 +182,7 @@ public class tetrisMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            tetrisCubeMove.Play();
             aimPos.x++;
             FindOriginal();
             if (CheckOut() != 0)
@@ -186,6 +196,7 @@ public class tetrisMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            tetrisCubeMove.Play();
             aimPos.y++;
             FindOriginal();
             if (CheckOut() != 0)
@@ -200,6 +211,7 @@ public class tetrisMove : MonoBehaviour
         //下落
         if (Input.GetKeyDown(KeyCode.L))
         {
+            tetrisDrop.Play();
             FallDown();
         }
 	}

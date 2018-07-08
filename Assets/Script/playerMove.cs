@@ -10,9 +10,11 @@ public class playerMove : MonoBehaviour {
     float z;
     float y;
 
+    AudioSource step;
+
 	// Use this for initialization
 	void Start () {
-        
+        step = this.gameObject.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -28,7 +30,7 @@ public class playerMove : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
-
+                step.Play();
                 if (checkFace() == 4)
                 {
 
@@ -59,6 +61,7 @@ public class playerMove : MonoBehaviour {
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
+                step.Play();
                 if (checkFace() == 1)
                 {
                     pos = this.gameObject.transform.position;
@@ -90,6 +93,7 @@ public class playerMove : MonoBehaviour {
             }
             else if (Input.GetKeyDown(KeyCode.A))
             {
+                step.Play();
                 if (checkFace() == 2)
                 {
 
@@ -120,6 +124,7 @@ public class playerMove : MonoBehaviour {
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {
+                step.Play();
                 if (checkFace() == 3)
                 {
 

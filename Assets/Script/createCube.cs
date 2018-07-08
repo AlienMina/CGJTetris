@@ -15,6 +15,9 @@ public class createCube : MonoBehaviour {
 
     public float destroyTime = 3f;//拆方块需要的时间
     bool startDestroy=false;
+    public AudioSource placeCube;
+    public AudioSource breakCube;
+    public AudioSource deleteCube;
 
     public GameObject[] Instcube;
     // Use this for initialization
@@ -37,7 +40,8 @@ public class createCube : MonoBehaviour {
             //检测该位置是否有方块
             //Debug.Log("PlayerY: " + (int)pos.y);
             if (!spaceCube.field[(int)pos.x,(int)pos.z,(int)pos.y].isCube&&pos.x<7&&pos.z<7)//如果生成位置没有方块，并且在场景范围内
-            {                
+            {
+                placeCube.Play();
                 int Type = Random.Range(0, 100);
                 Type = Type < 49 ? 0 : 1;
                 bool find = false;
@@ -147,6 +151,7 @@ public class createCube : MonoBehaviour {
             //有方块的情况下，开始凿
             if (spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube)
             {
+                
                 startDestroy = true;
                 Debug.Log("startDestory");
                 spaceCube.playerMoveable = false;
@@ -154,17 +159,20 @@ public class createCube : MonoBehaviour {
         }
         else if (Input.GetKeyUp(KeyCode.E))
         {
+            breakCube.volume = 0;
             startDestroy = false;
             spaceCube.playerMoveable = true;
         }
 
         if (startDestroy)
         {
+            breakCube.volume = 0.2f;
             spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp--;
             Debug.Log(spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp--);
             if(spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].cubeHp == 0)
             {
                 spaceCube.field[(int)pos.x, (int)pos.z, (int)pos.y].isCube = false;
+                startDestroy = false;
                 destroyCube();
             }
         }
@@ -236,6 +244,8 @@ public class createCube : MonoBehaviour {
             Debug.DrawLine(ray.origin, hit.point, Color.red);
             if (hit.collider.tag == "cube")
             {
+                deleteCube.Play();
+                breakCube.volume = 0f;
                 Destroy(hit.collider.gameObject);
             }
         }
